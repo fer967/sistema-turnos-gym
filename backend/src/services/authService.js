@@ -1,29 +1,55 @@
 import bcrypt from "bcrypt";
-
 import {
     findUserByEmail,
     createUser
-} from "../repositories/authRepository.js";
+} from "../repositories/userRepository.js";
+import { generateToken } from "../utils/generateToken.js";
 
-export const registerUser = async (userData) => {
+export async function registerUser(data) {
+    const exists = await findUserByEmail(data.email);        
+    if (exists) {
+        throw new Error("El email ya está registrado");
+    }
+    const password_hash = await bcrypt.hash(data.password, 10);
+    const user = await createUser({
+        name: data.name,
+        email: data.email,
+        password_hash,
+        phone: data.phone || null,
+        role: "client"
+    });
+    return user;
+}
 
-    const existingUser =
-        await findUserByEmail(userData.email);
+export async function loginUser(data) {
 
-    if (existingUser) {
-        throw new Error("El email ya está registrado.");
+    const user = await findUserByEmail(data.email);
+
+    if (!user) {
+        throw new Error("Email o contraseña incorrectos");
     }
 
-    const passwordHash =
-        await bcrypt.hash(userData.password, 10);
+    const passwordCorrect = await bcrypt.compare(
+        data.password,
+        user.password_hash
+    );
 
-    const newUser =
-        await createUser({
-            name: userData.name,
-            email: userData.email,
-            passwordHash,
-            phone: userData.phone
-        });
+    if (!passwordCorrect) {
+        throw new Error("Email o contraseña incorrectos");
+    }
 
-    return newUser;
-};
+    const token = generateToken(user);
+
+    return {
+        token,
+        user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: user.role
+        }
+    };
+
+}
+
+

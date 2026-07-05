@@ -1,25 +1,36 @@
-import { registerUser } from "../services/authService.js";
+import { registerUser, loginUser } from "../services/authService.js";
 
-import {
-    successResponse,
-    errorResponse
-} from "../utils/apiResponse.js";
-
-export const register = async (req, res) => {
+export async function register(req, res, next) {
     try {
-        const user =
-            await registerUser(req.body);
-        return successResponse(
-            res,
-            201,
-            "Usuario registrado correctamente.",
-            user
-        );
+        const user = await registerUser(req.body);        
+        res.status(201).json({
+            success: true,
+            message: "Usuario registrado correctamente",
+            data: user
+        });
     } catch (error) {
-        return errorResponse(
-            res,
-            400,
-            error.message
-        );
+        next(error);
     }
-};
+}
+
+
+export async function login(req, res, next) {
+    try {
+        const result = await loginUser(req.body);
+        res.json({
+            success: true,
+            message: "Login exitoso",
+            data: result
+        });
+    } catch (error) {
+        next(error);
+    }
+}
+
+// export async function login(req, res) {
+//     res.json({
+//         success: true,
+//         message: "Login (pendiente)"
+//     });
+// }
+
