@@ -1,0 +1,144 @@
+.navbar {
+
+    background: #2563EB;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 1rem 2rem;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 999;
+
+}
+
+.logo {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 1.4rem;
+
+    font-weight: bold;
+
+}
+
+.links {
+
+    display: flex;
+
+    gap: 1.5rem;
+
+    align-items: center;
+
+}
+
+.links a {
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: 500;
+
+}
+
+.links a:hover {
+
+    opacity: .8;
+
+}
+
+.links a.active {
+
+    border-bottom: 2px solid white;
+
+}
+
+.logout {
+
+    border: none;
+
+    background: white;
+
+    color: #2563EB;
+
+    padding: .5rem 1rem;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+}
+
+.menuButton {
+
+    display: none;
+
+    background: none;
+
+    border: none;
+
+    color: white;
+
+    font-size: 1.5rem;
+
+    cursor: pointer;
+
+}
+
+
+@media(max-width:768px) {
+    .menuButton {
+        display: block;
+    }
+
+    .links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: #2563EB;
+        display: none;
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .active {
+        display: flex;
+    }
+
+    .userInfo {
+        width: 100%;
+        justify-content: center;
+        margin-top: .5rem;
+    }
+
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .4rem .8rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .15);
+}
+
+.avatar {
+    font-size: 1.1rem;
+}
+
+.userName {
+    font-weight: 600;
+    white-space: nowrap;
+}
