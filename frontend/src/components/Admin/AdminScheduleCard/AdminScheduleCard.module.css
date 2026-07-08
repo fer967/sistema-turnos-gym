@@ -1,0 +1,55 @@
+.card{
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:1.5rem;
+
+    box-shadow:0 4px 10px rgba(0,0,0,.08);
+
+}
+
+.actions{
+
+    margin-top:1rem;
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:.75rem;
+
+}
+
+.actions button{
+
+    border:none;
+
+    cursor:pointer;
+
+    background:#2563EB;
+
+    color:white;
+
+    width:40px;
+
+    height:40px;
+
+    border-radius:8px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    transition:.2s;
+
+}
+
+.actions button:hover{
+
+    transform:scale(1.05);
+
+}

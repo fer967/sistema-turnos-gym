@@ -1,0 +1,38 @@
+.container{
+
+    overflow-x:auto;
+
+}
+
+.table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+.table th,
+.table td{
+
+    padding:.8rem;
+
+    border-bottom:1px solid #ddd;
+
+    text-align:left;
+
+}
+
+.table th{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+.table tr:hover{
+
+    background:#f5f5f5;
+
+}

@@ -5,17 +5,22 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Schedules from "../pages/Schedules";
 import MyReservations from "../pages/MyReservations";
+import AdminDashboard from "../pages/AdminDashboard";
 
-export default function AppRouter(){
-    return(
+export default function AppRouter() {
+    return (
         <BrowserRouter>
             <Routes>
-                <Route element={<MainLayout/>}>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="/login" element={<Login/>}/>
-                    <Route path="/register" element={<Register/>}/>
-                    <Route path="/schedules" element={<Schedules/>}/>
-                    <Route path="/my-reservations" element={<MyReservations/>}/>
+                <Route element={<MainLayout />}>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/schedules" element={<Schedules />} />
+                    <Route path="/my-reservations" element={<MyReservations />} />
+                    <Route
+                        path="/admin"
+                        element={<AdminDashboard />}
+                    />
                 </Route>
             </Routes>
         </BrowserRouter>

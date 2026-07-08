@@ -31,24 +31,50 @@ export async function getAllReservationsRepository() {
     const query = `
         SELECT
             r.id,
+
             u.name,
             u.email,
+
             s.id AS schedule_id,
+
             d.name AS discipline,
-            s.day_of_week,
-            s.start_time,
-            s.end_time,
+
+            CASE s.day_of_week
+                WHEN 0 THEN 'Domingo'
+                WHEN 1 THEN 'Lunes'
+                WHEN 2 THEN 'Martes'
+                WHEN 3 THEN 'Miércoles'
+                WHEN 4 THEN 'Jueves'
+                WHEN 5 THEN 'Viernes'
+                WHEN 6 THEN 'Sábado'
+            END AS day_name,
+
+            TO_CHAR(s.start_time, 'HH24:MI')
+            ||
+            ' - '
+            ||
+            TO_CHAR(s.end_time, 'HH24:MI')
+            AS schedule,
+
             s.capacity,
+
             r.reservation_date,
+
             r.status,
+
             r.created_at
+
         FROM reservations r
+
         JOIN gym_users u
             ON r.user_id = u.id
+
         JOIN schedules s
             ON r.schedule_id = s.id
+
         JOIN disciplines d
             ON s.discipline_id = d.id
+
         ORDER BY
             r.reservation_date,
             s.start_time;
