@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
 import api from "../../../api/api";
 import ScheduleFields from "../ScheduleFields/ScheduleFields";
-import styles from "./ScheduleForm.module.css";
+import styles from "./EditScheduleForm.module.css";
 
-export default function ScheduleForm({ reloadSchedules }) {
+export default function EditScheduleForm({
+    schedule,
+    reloadSchedules,
+    onCancel
+}) {
 
     const [disciplines, setDisciplines] = useState([]);
 
     const [form, setForm] = useState({
-        discipline_id: "",
-        day_of_week: 1,
-        start_time: "",
-        end_time: "",
-        capacity: 20
+        discipline_id: schedule.discipline_id,
+        day_of_week: schedule.day_of_week,
+        start_time: schedule.start_time.slice(0, 5),
+        end_time: schedule.end_time.slice(0, 5),
+        capacity: schedule.capacity
     });
 
     useEffect(() => {
@@ -23,12 +27,6 @@ export default function ScheduleForm({ reloadSchedules }) {
         try {
             const response = await api.get("/disciplines");
             setDisciplines(response.data.data);
-            if (response.data.data.length > 0) {
-                setForm(prev => ({
-                    ...prev,
-                    discipline_id: response.data.data[0].id
-                }));
-            }
         } catch (error) {
             console.error(error);
         }
@@ -44,26 +42,18 @@ export default function ScheduleForm({ reloadSchedules }) {
     async function handleSubmit(e) {
         e.preventDefault();
         try {
-            await api.post(
-                "/admin/schedules",
+            await api.put(
+                `/admin/schedules/${schedule.id}`,
                 form
             );
-            alert("✅ Horario creado correctamente.");
-            if (reloadSchedules) {
-                reloadSchedules();
-            }
-            setForm({
-                discipline_id: disciplines[0]?.id || "",
-                day_of_week: 1,
-                start_time: "",
-                end_time: "",
-                capacity: 20
-            });
+            alert("✅ Horario actualizado.");
+            reloadSchedules();
+            onCancel();
         } catch (error) {
             console.error(error);
             alert(
                 error.response?.data?.message ||
-                "Error al crear el horario."
+                "Error al actualizar el horario."
             );
         }
     }
@@ -73,26 +63,27 @@ export default function ScheduleForm({ reloadSchedules }) {
             className={styles.form}
             onSubmit={handleSubmit}
         >
-            <h2>Nuevo horario</h2>
+            <h2>Editar horario</h2>
             <ScheduleFields
                 form={form}
                 disciplines={disciplines}
                 handleChange={handleChange}
             />
-            <button type="submit">
-                Crear horario
-            </button>
+            <div className={styles.buttons}>
+                <button type="submit">
+                    Guardar
+                </button>
+                <button
+                    type="button"
+                    onClick={onCancel}
+                >
+                    Cancelar
+                </button>
+            </div>
         </form>
     );
 
 }
-
-
-
-
-
-
-
 
 
 

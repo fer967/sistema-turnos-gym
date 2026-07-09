@@ -34,6 +34,3 @@ export async function deleteSchedule(id) {
 }
 
 
-// export async function deleteSchedule(id) {
-//     return await deleteScheduleRepository(id);
-// }

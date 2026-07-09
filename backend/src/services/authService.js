@@ -22,24 +22,18 @@ export async function registerUser(data) {
 }
 
 export async function loginUser(data) {
-
     const user = await findUserByEmail(data.email);
-
     if (!user) {
         throw new Error("Email o contraseña incorrectos");
     }
-
     const passwordCorrect = await bcrypt.compare(
         data.password,
         user.password_hash
     );
-
     if (!passwordCorrect) {
         throw new Error("Email o contraseña incorrectos");
     }
-
     const token = generateToken(user);
-
     return {
         token,
         user: {

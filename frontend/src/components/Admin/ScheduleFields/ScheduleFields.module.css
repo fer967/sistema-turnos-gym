@@ -1,0 +1,12 @@
+select,
+input{
+    padding:.75rem;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:1rem;
+    width:100%;
+}
+
+label{
+    font-weight:600;
+}

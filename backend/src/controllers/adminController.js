@@ -86,17 +86,3 @@ export async function removeSchedule(req, res, next) {
 }
 
 
-// export async function removeSchedule(req, res, next) {
-//     try {
-//         const schedule = await deleteSchedule(
-//             req.params.id.trim()
-//         );
-//         res.json({
-//             success: true,
-//             message: "Horario eliminado",
-//             data: schedule
-//         });
-//     } catch (error) {
-//         next(error);
-//     }
-// }

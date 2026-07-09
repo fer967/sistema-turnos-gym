@@ -1,13 +1,5 @@
--- ==========================================
--- GYM BOOKING SYSTEM
--- Schema
--- ==========================================
-
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
--- ==========================
--- USERS
--- ==========================
 
 CREATE TABLE gym_users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -19,9 +11,6 @@ CREATE TABLE gym_users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ==========================
--- DISCIPLINES
--- ==========================
 
 CREATE TABLE disciplines (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -30,9 +19,6 @@ CREATE TABLE disciplines (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ==========================
--- SCHEDULES
--- ==========================
 
 CREATE TABLE schedules (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -44,9 +30,6 @@ CREATE TABLE schedules (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ==========================
--- RESERVATIONS
--- ==========================
 
 CREATE TABLE reservations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -57,9 +40,7 @@ CREATE TABLE reservations (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- ==========================
--- INDEXES
--- ==========================
+
 
 CREATE INDEX idx_gym_users_email
 ON gym_users(email);

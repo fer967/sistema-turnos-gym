@@ -27,10 +27,4 @@ export async function login(req, res, next) {
     }
 }
 
-// export async function login(req, res) {
-//     res.json({
-//         success: true,
-//         message: "Login (pendiente)"
-//     });
-// }
 
