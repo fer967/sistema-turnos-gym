@@ -107,40 +107,47 @@ export async function cancelReservation(reservationId, userId) {
 
 
 export async function getReservationDetails(reservationId) {
-
     const query = `
         SELECT
-
             r.id,
-
             r.reservation_date,
-
             u.name,
-
             u.phone,
-
             d.name AS discipline,
-
             s.start_time,
-
             s.end_time
-
         FROM reservations r
-
         JOIN gym_users u
             ON r.user_id = u.id
-
         JOIN schedules s
             ON r.schedule_id = s.id
-
         JOIN disciplines d
             ON s.discipline_id = d.id
-
         WHERE r.id = $1;
     `;
-
     const result = await db.query(query, [reservationId]);
-
     return result.rows[0];
+}
 
+export async function getCancelledReservationDetails(reservationId) {
+    const query = `
+        SELECT
+            r.id,
+            r.reservation_date,
+            u.name,
+            u.phone,
+            d.name AS discipline,
+            s.start_time,
+            s.end_time
+        FROM reservations r
+        JOIN gym_users u
+            ON r.user_id = u.id
+        JOIN schedules s
+            ON r.schedule_id = s.id
+        JOIN disciplines d
+            ON s.discipline_id = d.id
+        WHERE r.id = $1;
+    `;
+    const result = await db.query(query, [reservationId]);
+    return result.rows[0];
 }

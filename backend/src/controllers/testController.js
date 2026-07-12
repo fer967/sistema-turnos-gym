@@ -1,7 +1,6 @@
 import { sendWhatsAppMessage } from "../services/whatsappService.js";
 
 export async function sendTestMessage(req, res, next) {
-
     try {
         const response = await sendWhatsAppMessage(
             process.env.WHATSAPP_RECIPIENT,

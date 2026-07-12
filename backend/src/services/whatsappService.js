@@ -4,31 +4,35 @@ import { normalizePhoneNumber }
 
 const BASE_URL = `https://graph.facebook.com/${process.env.WHATSAPP_API_VERSION}`;
 
-async function sendWhatsAppMessage(to, message) {
-
-    const normalizedPhone =
-        normalizePhoneNumber(to);
-
-    const response = await axios.post(
-        `${BASE_URL}/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
-        {
-            messaging_product: "whatsapp",
-            to: normalizedPhone,
-            type: "text",
-            text: {
-                body: message
+export async function sendWhatsAppMessage(to, message) {
+    const normalizedPhone = normalizePhoneNumber(to);
+    if (!normalizedPhone) {
+        throw new Error("Número de teléfono inválido.");
+    }
+    try {
+        const response = await axios.post(
+            `${BASE_URL}/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
+            {
+                messaging_product: "whatsapp",
+                to: normalizedPhone,
+                type: "text",
+                text: {
+                    body: message
+                }
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
+                    "Content-Type": "application/json"
+                }
             }
-        },
-
-        {
-            headers: {
-                Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
-                "Content-Type": "application/json"
-            }
-        }
-
-    );
-    return response.data;
+        );
+        return response.data;
+    } catch (error) {
+        console.error("STATUS:", error.response?.status);
+        console.error("DATA:", JSON.stringify(error.response?.data, null, 2));
+        throw error;
+    }
 }
 
 export async function sendReservationConfirmation(data) {
@@ -47,44 +51,22 @@ Horario: ${data.start_time} - ${data.end_time}
 }
 
 // sendReservationCancellation()
+export async function sendReservationCancellation(data) {
+    const message = `
+🏋️ Gym Booking System
+❌ Reserva cancelada
+Disciplina: ${data.discipline}
+Fecha: ${data.date}
+Horario: ${data.start_time} - ${data.end_time}
+Esperamos verte pronto. 💪
+`;
+    return await sendWhatsAppMessage(
+        data.phone,
+        message.trim()
+    );
+}
 
 // sendWelcomeMessage()
 
 
 
-// import axios from "axios";
-
-// const BASE_URL = `https://graph.facebook.com/${process.env.WHATSAPP_API_VERSION}`;
-
-// export async function sendWhatsAppMessage(to, message) {
-
-//     try {
-//         console.log("API:", BASE_URL);
-//         console.log("PHONE ID:", process.env.WHATSAPP_PHONE_NUMBER_ID);
-//         console.log("TO:", to);
-
-//         const response = await axios.post(
-//             `${BASE_URL}/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
-//             {
-//                 messaging_product: "whatsapp",
-//                 to,
-//                 type: "text",
-//                 text: {
-//                     body: message
-//                 }
-//             },
-//             {
-//                 headers: {
-//                     Authorization: `Bearer ${process.env.WHATSAPP_TOKEN}`,
-//                     "Content-Type": "application/json"
-//                 }
-//             }
-//         );
-
-//         return response.data;
-//     } catch (error) {
-//         console.error("STATUS:", error.response?.status);
-//         console.error("DATA:", JSON.stringify(error.response?.data, null, 2));
-//         throw error;
-//     }
-// }

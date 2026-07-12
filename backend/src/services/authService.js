@@ -4,18 +4,25 @@ import {
     createUser
 } from "../repositories/userRepository.js";
 import { generateToken } from "../utils/generateToken.js";
+import { normalizePhoneNumber }
+    from "../utils/phoneUtils.js";
 
 export async function registerUser(data) {
-    const exists = await findUserByEmail(data.email);        
+    const exists = await findUserByEmail(data.email);
     if (exists) {
         throw new Error("El email ya está registrado");
     }
     const password_hash = await bcrypt.hash(data.password, 10);
+    const normalizedPhone =
+        normalizePhoneNumber(data.phone);
+    if (!normalizedPhone) {
+        throw new Error("Número de teléfono inválido.");
+    }
     const user = await createUser({
         name: data.name,
         email: data.email,
         password_hash,
-        phone: data.phone || null,
+        phone: normalizedPhone || null,
         role: "client"
     });
     return user;

@@ -71,7 +71,7 @@ export default function Register() {
                 />
                 <input
                     name="phone"
-                    placeholder="Teléfono"
+                    placeholder="TE por ej:+54 9 351 627 1526 "
                     value={form.phone}
                     onChange={handleChange}
                 />

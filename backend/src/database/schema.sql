@@ -6,7 +6,7 @@ CREATE TABLE gym_users (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(150) UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
-    phone VARCHAR(20),
+    phone VARCHAR(20) UNIQUE NOT NULL,
     role VARCHAR(20) NOT NULL DEFAULT 'client',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
