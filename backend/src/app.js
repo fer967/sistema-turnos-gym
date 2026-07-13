@@ -8,7 +8,8 @@ import disciplineRoutes from "./routes/disciplineRoutes.js";
 import reservationRoutes from "./routes/reservationRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import scheduleRoutes from "./routes/scheduleRoutes.js";
-import testRoutes from "./routes/testRoutes.js";
+import testRoutes from "./routes/testRoutes.js"
+import webhookRoutes from "./routes/webhookRoutes.js";
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use("/api/reservations", reservationRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/schedules", scheduleRoutes);
 app.use("/api/test", testRoutes);
+app.use("/api/webhook", webhookRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
