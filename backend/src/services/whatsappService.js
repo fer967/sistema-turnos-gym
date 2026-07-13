@@ -9,6 +9,15 @@ export async function sendWhatsAppMessage(to, message) {
     if (!normalizedPhone) {
         throw new Error("Número de teléfono inválido.");
     }
+
+    console.log("================================");
+    console.log("BASE_URL:", BASE_URL);
+    console.log("PHONE_ID:", process.env.WHATSAPP_PHONE_NUMBER_ID);
+    console.log("TOKEN:", process.env.WHATSAPP_TOKEN?.substring(0, 20) + "...");
+    console.log("TO:", normalizedPhone);
+    console.log("BODY:", message);
+    console.log("================================");
+
     try {
         const response = await axios.post(
             `${BASE_URL}/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
@@ -28,9 +37,18 @@ export async function sendWhatsAppMessage(to, message) {
             }
         );
         return response.data;
+
     } catch (error) {
         console.error("STATUS:", error.response?.status);
         console.error("DATA:", JSON.stringify(error.response?.data, null, 2));
+        console.error("REQUEST DATA:", {
+            messaging_product: "whatsapp",
+            to: normalizedPhone,
+            type: "text",
+            text: {
+                body: message
+            }
+        });
         throw error;
     }
 }
@@ -50,7 +68,7 @@ Horario: ${data.start_time} - ${data.end_time}
     );
 }
 
-// sendReservationCancellation()
+
 export async function sendReservationCancellation(data) {
     const message = `
 🏋️ Gym Booking System
@@ -65,6 +83,8 @@ Esperamos verte pronto. 💪
         message.trim()
     );
 }
+
+
 
 // sendWelcomeMessage()
 
