@@ -36,6 +36,12 @@ export async function sendWhatsAppMessage(to, message) {
                 }
             }
         );
+
+        console.log(
+            "META RESPONSE:",
+            JSON.stringify(response.data, null, 2)
+        );
+
         return response.data;
 
     } catch (error) {
