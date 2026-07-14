@@ -35,7 +35,6 @@ export default function Login() {
             setLoading(false);
         }
     }
-
     return (
         <div className={styles.container}>
             <form

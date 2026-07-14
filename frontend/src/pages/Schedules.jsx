@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/api";
 import styles from "./Schedules.module.css";
 import ScheduleCard from "../components/ScheduleCard/ScheduleCard";
+import { useSearchParams } from "react-router-dom";
 
 export default function Schedules() {
 
@@ -9,6 +10,9 @@ export default function Schedules() {
     const [loading, setLoading] = useState(true);
     const today = new Date().toISOString().split("T")[0];
     const [selectedDate, setSelectedDate] = useState(today);
+    const [searchParams] = useSearchParams();
+    const selectedDiscipline =
+        searchParams.get("discipline");
 
     useEffect(() => {
         loadSchedules();
@@ -26,26 +30,41 @@ export default function Schedules() {
     }
 
     async function reserve(scheduleId) {
-    try {
-        await api.post("/reservations", {
-            schedule_id: scheduleId,
-            reservation_date: selectedDate
-        });
-        alert("✅ Reserva realizada correctamente.");
-    } catch (error) {
-        console.error(error);
-        alert(
-            error.response?.data?.message ||
-            "Error al realizar la reserva."
-        );
+        try {
+            await api.post("/reservations", {
+                schedule_id: scheduleId,
+                reservation_date: selectedDate
+            });
+            alert("✅ Reserva realizada correctamente.");
+        } catch (error) {
+            console.error(error);
+            alert(
+                error.response?.data?.message ||
+                "Error al realizar la reserva."
+            );
+        }
     }
-}
+
+    const filteredSchedules = selectedDiscipline
+        ? schedules.filter(
+            schedule =>
+                String(schedule.discipline_id) ===
+                selectedDiscipline
+        )
+        : schedules;
 
     return (
         <div className={styles.container}>
             <h1 className={styles.title}>
                 Horarios disponibles
             </h1>
+            {
+                selectedDiscipline && (
+                    <p className={styles.filterInfo}>
+                        Mostrando horarios de la disciplina seleccionada.
+                    </p>
+                )
+            }
             <div className={styles.filters}>
                 <label>
                     Fecha de la reserva
@@ -58,19 +77,19 @@ export default function Schedules() {
             </div>
             {
                 loading
-                ? <p>Cargando horarios...</p>
-                :
-                <div className={styles.grid}>
-                    {
-                        schedules.map(schedule => (
-                            <ScheduleCard
-                                key={schedule.id}
-                                schedule={schedule}
-                                onReserve={reserve}
-                            />
-                        ))
-                    }
-                </div>
+                    ? <p>Cargando horarios...</p>
+                    :
+                    <div className={styles.grid}>
+                        {
+                            filteredSchedules.map(schedule => (
+                                <ScheduleCard
+                                    key={schedule.id}
+                                    schedule={schedule}
+                                    onReserve={reserve}
+                                />
+                            ))
+                        }
+                    </div>
             }
         </div>
     );

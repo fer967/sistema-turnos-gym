@@ -1,14 +1,4 @@
-import { Link } from "react-router-dom";
 import styles from "./Home.module.css";
-import {
-
-    FaDumbbell,
-    FaBicycle,
-    FaHeartbeat
-
-} from "react-icons/fa";
-
-import { GiMeditation } from "react-icons/gi";
 import DisciplineCard from "../components/DisciplineCard/DisciplineCard";
 import { useEffect, useState } from "react";
 import api from "../api/api";
@@ -33,30 +23,26 @@ export default function Home() {
         }
     }
 
+    const disciplineImages = {
+        Pesas: "pesas.jpg",
+        Spinning: "spinning.jpg",
+        Pilates: "pilates.jpg",
+        Funcional: "funcional.jpg",
+        Fitness: "fitness.jpg"
+    };
+
     return (
         <div className={styles.container}>
             <section className={styles.hero}>
-                <h1>Entrena cuando quieras</h1>
-                <p>
-                    Reserva tus clases favoritas de manera rápida,
-                    simple y desde cualquier dispositivo.
-                </p>
-                <div className={styles.buttons}>
-                    <Link
-                        to="/register"
-                        className={styles.primary}
-                    >
-                        Registrarse
-                    </Link>
-                    <Link
-                        to="/schedules"
-                        className={styles.secondary}
-                    >
-                        Ver Horarios
-                    </Link>
+                <div className={styles.overlay}>
+                    <h1>Gym Booking System</h1>
+                    <p>
+                        Reserva tus clases de Pesas, Spinning,
+                        Pilates, Funcional y Fitness
+                        desde cualquier dispositivo.
+                    </p>
                 </div>
             </section>
-
             <section className={styles.disciplines}>
                 <h2>Nuestras disciplinas</h2>
                 <div className={styles.grid}>
@@ -66,14 +52,15 @@ export default function Home() {
                             : disciplines.map((discipline) => (
                                 <DisciplineCard
                                     key={discipline.id}
+                                    id={discipline.id}
                                     title={discipline.name}
                                     description={discipline.description}
+                                    image={`/images/disciplines/${disciplineImages[discipline.name]}`}
                                 />
                             ))
                     }
                 </div>
             </section>
-
         </div>
     );
 }
