@@ -35,8 +35,6 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-console.log("🚀 Webhook route loaded");
-
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/disciplines", disciplineRoutes);
@@ -45,8 +43,6 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/schedules", scheduleRoutes);
 app.use("/api/test", testRoutes);
 app.use("/api/webhook", webhookRoutes);
-
-console.log("✅ /webhook registrada");
 
 app.use(notFound);
 app.use(errorHandler);

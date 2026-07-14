@@ -6,6 +6,7 @@ import {
 import { generateToken } from "../utils/generateToken.js";
 import { normalizePhoneNumber }
     from "../utils/phoneUtils.js";
+import { ROLES } from "../constants/roles.js";
 
 export async function registerUser(data) {
     const exists = await findUserByEmail(data.email);
@@ -23,10 +24,11 @@ export async function registerUser(data) {
         email: data.email,
         password_hash,
         phone: normalizedPhone || null,
-        role: "client"
+        role: ROLES.CLIENT
     });
     return user;
 }
+
 
 export async function loginUser(data) {
     const user = await findUserByEmail(data.email);

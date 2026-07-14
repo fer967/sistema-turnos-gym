@@ -10,6 +10,7 @@ export async function findUserByEmail(email) {
     return result.rows[0];
 }
 
+
 export async function createUser(user) {
     const query = `
         INSERT INTO gym_users
