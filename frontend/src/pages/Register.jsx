@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 import styles from "./Register.module.css";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Register() {
 
@@ -32,12 +33,12 @@ export default function Register() {
                 "/auth/register",
                 form
             );
-            alert("Usuario registrado correctamente.");
+            toast.success("Usuario registrado correctamente.");
             navigate("/login");
         }
         catch (error) {
             console.error(error);
-            alert(
+            toast.error(
                 error.response?.data?.message ||
                 "No fue posible registrar el usuario."
             );

@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import api from "../api/api";
 import styles from "./Login.module.css";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Login() {
 
@@ -26,7 +27,7 @@ export default function Login() {
         }
         catch (error) {
             console.error(error);
-            alert(
+            toast.error(
                 error.response?.data?.message ||
                 "Email o contraseña incorrectos"
             );

@@ -1,99 +1,82 @@
 .navbar {
-
-    background: #2563EB;
-
-    color: white;
-
+    background: white;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, .08);
+    border-bottom: 1px solid #eee;
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
-
     padding: 1rem 2rem;
-
     position: sticky;
-
     top: 0;
-
     z-index: 999;
-
 }
 
-.logo {
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#1E3A8A;
+    text-decoration:none;
+}
 
-    color: white;
+.logo h2{
+    margin:0;
+    font-size:1.3rem;
+}
 
-    text-decoration: none;
+.logo small{
+    color:#777;
+}
 
-    font-size: 1.4rem;
-
-    font-weight: bold;
-
+.logoIcon{
+    font-size:2rem;
 }
 
 .links {
-
     display: flex;
-
     gap: 1.5rem;
-
     align-items: center;
-
 }
 
 .links a {
-
-    color: white;
-
+    color: #444;
     text-decoration: none;
-
     font-weight: 500;
-
 }
 
 .links a:hover {
-
-    opacity: .8;
-
+    color:#2563EB;
 }
 
-.links a.active {
-
-    border-bottom: 2px solid white;
-
+.links a.active{
+    color:#2563EB;
+    border-bottom:3px solid #2563EB;
+    padding-bottom:.3rem;
 }
 
 .logout {
-
+    margin-top:.7rem;
+    width:100%;
     border: none;
-
     background: white;
-
     color: #2563EB;
-
     padding: .5rem 1rem;
-
     border-radius: 8px;
-
     cursor: pointer;
+}
 
+.logout:hover{
+    background:#1E40AF;
+    color:white;
 }
 
 .menuButton {
-
     display: none;
-
     background: none;
-
     border: none;
-
     color: white;
-
     font-size: 1.5rem;
-
     cursor: pointer;
-
 }
 
 
@@ -131,12 +114,23 @@
     gap: .5rem;
     padding: .4rem .8rem;
     border-radius: 999px;
-    background: rgba(255, 255, 255, .15);
+    background:#F3F6FB;
 }
 
-.avatar {
-    font-size: 1.1rem;
+.avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#2563EB;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
 }
+
+/* .avatar {
+    font-size: 1.1rem;
+} */
 
 .userName {
     font-weight: 600;

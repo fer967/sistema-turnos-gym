@@ -27,13 +27,19 @@ export default function Navbar() {
 
     return (
         <nav className={styles.navbar}>
+
             <Link
                 to="/"
                 className={styles.logo}
                 onClick={closeMenu}
             >
-                GymBooking
+                <span className={styles.logoIcon}>🏋️</span>
+                <div>
+                    <h2>Gym Booking</h2>
+                    <small>Reserva de clases</small>
+                </div>
             </Link>
+
             <button
                 className={styles.menuButton}
                 onClick={() => setMenuOpen(!menuOpen)}
@@ -53,23 +59,25 @@ export default function Navbar() {
                 <NavLink to="/schedules" onClick={closeMenu}>
                     Horarios
                 </NavLink>
+
                 {
-                    user && (
+                    user?.role === "client" && (
                         <NavLink
                             to="/my-reservations"
                             onClick={closeMenu}
                         >
-                            Mis Reservaciones
+                            Mis Reservas
                         </NavLink>
                     )
                 }
+
                 {
                     user?.role === "admin" && (
                         <NavLink
                             to="/admin"
                             onClick={closeMenu}
                         >
-                            Administración
+                            Dashboard
                         </NavLink>
                     )
                 }
@@ -91,18 +99,26 @@ export default function Navbar() {
                         </>
                     )
                 }
-
                 {
                     user && (
                         <div>
+
                             <div className={styles.userInfo}>
                                 <span className={styles.avatar}>
-                                    👤
+                                    {user.role === "admin" ? "🛡️" : "👤"}
                                 </span>
-                                <span className={styles.userName}>
-                                    {firstName}
-                                </span>
+                                <div>
+                                    <small>
+                                        {
+                                            user.role === "admin"
+                                                ? "Administrador"
+                                                : "Bienvenido"
+                                        }
+                                    </small>
+                                    <strong>{firstName}</strong>
+                                </div>
                             </div>
+
                             <button
                                 className={styles.logout}
                                 onClick={handleLogout}
@@ -112,7 +128,6 @@ export default function Navbar() {
                         </div>
                     )
                 }
-
             </div>
         </nav>
     );
@@ -123,15 +138,4 @@ export default function Navbar() {
 
 
 
-
-// {
-//     user && (
-//         <button
-//             className={styles.logout}
-//             onClick={handleLogout}
-//         >
-//             Cerrar sesión
-//         </button>
-//     )
-// }
 

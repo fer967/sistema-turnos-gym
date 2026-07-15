@@ -3,6 +3,7 @@ import api from "../api/api";
 import styles from "./Schedules.module.css";
 import ScheduleCard from "../components/ScheduleCard/ScheduleCard";
 import { useSearchParams } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Schedules() {
 
@@ -35,10 +36,10 @@ export default function Schedules() {
                 schedule_id: scheduleId,
                 reservation_date: selectedDate
             });
-            alert("✅ Reserva realizada correctamente.");
+            toast.success("Reserva realizada correctamente.");
         } catch (error) {
             console.error(error);
-            alert(
+            toast.error(
                 error.response?.data?.message ||
                 "Error al realizar la reserva."
             );
