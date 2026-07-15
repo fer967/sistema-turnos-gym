@@ -15,11 +15,22 @@ export function verifyWebhook(req, res) {
 
 
 export function receiveWebhook(req, res) {
-    console.log(
-        "📨 Evento recibido desde Meta:"
-    );
-    console.log(
-        JSON.stringify(req.body, null, 2)
-    );
+
+    console.log("====================================");
+    console.log("WEBHOOK RECIBIDO");
+    console.log(JSON.stringify(req.body, null, 2));
+    console.log("====================================");
+
     res.sendStatus(200);
 }
+
+
+// export function receiveWebhook(req, res) {
+//     console.log(
+//         "📨 Evento recibido desde Meta:"
+//     );
+//     console.log(
+//         JSON.stringify(req.body, null, 2)
+//     );
+//     res.sendStatus(200);
+// }
