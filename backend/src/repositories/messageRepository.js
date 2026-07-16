@@ -1,5 +1,6 @@
 import db from "../config/db.js";
 
+
 export async function createMessageLog(data) {
     const query = `
         INSERT INTO message_logs

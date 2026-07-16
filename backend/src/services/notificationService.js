@@ -7,6 +7,10 @@ import {
     sendCancelTemplate
 } from "./whatsappTemplateService.js";
 
+import {
+    createMessageLog
+} from "../repositories/messageRepository.js";
+
 
 function isConversationClosed(error) {
     const apiError = error.response?.data?.error;
@@ -197,77 +201,4 @@ Horario: ${data.start_time} - ${data.end_time}
 }
 
 
-// export async function notifyCancellation(data) {
-//     const message = `
-// 🏋️ Gym Booking System
-// ❌ Reserva cancelada
-// Hola ${data.name}.
-// Disciplina: ${data.discipline}
-// Fecha: ${data.date}
-// Horario: ${data.start_time} - ${data.end_time}
-// Esperamos verte pronto. 💪
-// `;
 
-//     try {
-//         return await sendWhatsAppMessage(
-//             data.phone,
-//             message.trim()
-//         );
-//     } catch (error) {
-//         if (isConversationClosed(error)) {
-//             console.log("📨 Ventana cerrada. Enviando plantilla...");
-//             return await sendCancelTemplate({
-//                 phone: data.phone,
-//                 name: data.name,
-//                 discipline: data.discipline,
-//                 date: data.date,
-//                 schedule: `${data.start_time} - ${data.end_time}`
-//             });
-//         }
-//         throw error;
-//     }
-// }
-
-
-
-// export async function notifyReservation(data) {
-//     const message = `
-// 🏋️ Gym Booking System
-// ✅ Reserva confirmada
-// Hola ${data.name}.
-// Disciplina: ${data.discipline}
-// Fecha: ${data.date}
-// Horario: ${data.start_time} - ${data.end_time}
-// ¡Te esperamos! 💪
-// `;
-
-//     try {
-//         return await sendWhatsAppMessage(
-//             data.phone,
-//             message.trim()
-//         );
-//         await createMessageLog({
-//             user_id: data.user_id,
-//             reservation_id: data.reservation_id,
-//             phone: data.phone,
-//             type: "reservation_confirmation",
-//             channel: "text",
-//             status: "sent",
-//             whatsapp_message_id:
-//                 response.data.messages[0].id
-//         });
-//     } catch (error) {
-//         if (isConversationClosed(error)) {
-//             console.log("📨 Ventana cerrada. Enviando plantilla...");
-//             return await sendReservationTemplate({
-//                 phone: data.phone,
-//                 name: data.name,
-//                 discipline: data.discipline,
-//                 date: data.date,
-//                 schedule: `${data.start_time} - ${data.end_time}`
-//             });
-//         }
-//         throw error;
-//     }
-
-// }
