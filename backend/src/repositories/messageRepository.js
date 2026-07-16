@@ -1,6 +1,5 @@
 import db from "../config/db.js";
 
-
 export async function createMessageLog(data) {
     const query = `
         INSERT INTO message_logs
@@ -11,14 +10,19 @@ export async function createMessageLog(data) {
             type,
             channel,
             status,
+            template_name,
+            payload,
             whatsapp_message_id,
+            retried,
+            parent_message_id,
             error_code,
             error_message
         )
         VALUES
-        ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+        ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
         RETURNING *;
     `;
+
     const values = [
         data.user_id,
         data.reservation_id,
@@ -26,10 +30,15 @@ export async function createMessageLog(data) {
         data.type,
         data.channel,
         data.status,
+        data.template_name,
+        data.payload,
         data.whatsapp_message_id,
+        data.retried ?? false,
+        data.parent_message_id ?? null,
         data.error_code,
         data.error_message
     ];
+
     const result = await db.query(query, values);
     return result.rows[0];
 }
@@ -44,16 +53,46 @@ export async function updateMessageStatus(
     const query = `
         UPDATE message_logs
         SET
-            status=$2,
-            error_code=$3,
-            error_message=$4,
+            status = $2,
+            error_code = $3,
+            error_message = $4,
             updated_at = NOW()
-        WHERE whatsapp_message_id=$1;
+        WHERE whatsapp_message_id = $1;
     `;
-    await db.query(query,[
+
+    await db.query(query, [
         whatsappMessageId,
         status,
         errorCode,
         errorMessage
     ]);
 }
+
+export async function findMessageByWhatsappId(
+    whatsappMessageId
+) {
+    const query = `
+        SELECT *
+        FROM message_logs
+        WHERE whatsapp_message_id = $1;
+    `;
+
+    const result = await db.query(query, [
+        whatsappMessageId
+    ]);
+
+    return result.rows[0];
+}
+
+export async function markAsRetried(id) {
+    await db.query(
+        `
+        UPDATE message_logs
+        SET retried = TRUE
+        WHERE id = $1
+        `,
+        [id]
+    );
+}
+
+

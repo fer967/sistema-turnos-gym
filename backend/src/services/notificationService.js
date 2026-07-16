@@ -47,6 +47,8 @@ Horario: ${data.start_time} - ${data.end_time}
             type: "confirmation",
             channel: "text",
             status: "sent",
+            template_name: "reservation_confirmation",
+            payload: data,
             provider_message_id: response.data?.messages?.[0]?.id
         });
 
@@ -72,6 +74,8 @@ Horario: ${data.start_time} - ${data.end_time}
                     type: "confirmation",
                     channel: "template",
                     status: "template_sent",
+                    template_name: "reservation_cancelled",
+                    payload: data,
                     provider_message_id:
                         response.data?.messages?.[0]?.id
                 });
@@ -86,6 +90,8 @@ Horario: ${data.start_time} - ${data.end_time}
                     type: "confirmation",
                     channel: "template",
                     status: "failed",
+                    template_name: "reservation_cancelled",
+                    payload: data,
                     error_code:
                         templateError.response?.data?.error?.code,
                     error_message:
@@ -102,6 +108,8 @@ Horario: ${data.start_time} - ${data.end_time}
             type: "confirmation",
             channel: "text",
             status: "failed",
+            template_name: "reservation_confirmation",
+            payload: data,
             error_code: error.response?.data?.error?.code,
             error_message: error.response?.data?.error?.message
         });
@@ -136,6 +144,8 @@ Horario: ${data.start_time} - ${data.end_time}
             type: "cancellation",
             channel: "text",
             status: "sent",
+            template_name: "reservation_cancelled",
+            payload: data,
             provider_message_id: response.data?.messages?.[0]?.id
         });
 
@@ -161,6 +171,8 @@ Horario: ${data.start_time} - ${data.end_time}
                     type: "cancellation",
                     channel: "template",
                     status: "template_sent",
+                    template_name: "reservation_cancelled",
+                    payload: data,
                     provider_message_id:
                         response.data?.messages?.[0]?.id
                 });
