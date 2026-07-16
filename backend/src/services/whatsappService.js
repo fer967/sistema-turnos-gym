@@ -1,23 +1,47 @@
 import axios from "axios";
 import { normalizePhoneNumber }
     from "../utils/phoneUtils.js";
+import {
+    sendReservationTemplate,
+    sendCancelTemplate
+} from "./whatsappTemplateService.js";
 
 const BASE_URL = `https://graph.facebook.com/${process.env.WHATSAPP_API_VERSION}`;
+
+async function sendWithFallback({
+    phone,
+    message,
+    templateFunction,
+    templateData
+}) {
+    try {
+        return await sendWhatsAppMessage(
+            phone,
+            message
+        );
+    } catch (error) {
+        const code =
+            error.response?.data?.error?.code;
+        if (code === 131047) {
+            console.log(
+                "⚠ Ventana de conversación cerrada."
+            );
+            console.log(
+                "📨 Enviando plantilla..."
+            );
+            return await templateFunction(
+                templateData
+            );
+        }
+        throw error;
+    }
+}
 
 export async function sendWhatsAppMessage(to, message) {
     const normalizedPhone = normalizePhoneNumber(to);
     if (!normalizedPhone) {
         throw new Error("Número de teléfono inválido.");
     }
-
-    console.log("================================");
-    console.log("BASE_URL:", BASE_URL);
-    console.log("PHONE_ID:", process.env.WHATSAPP_PHONE_NUMBER_ID);
-    console.log("TOKEN:", process.env.WHATSAPP_TOKEN?.substring(0, 20) + "...");
-    console.log("TO:", normalizedPhone);
-    console.log("BODY:", message);
-    console.log("================================");
-
     try {
         const response = await axios.post(
             `${BASE_URL}/${process.env.WHATSAPP_PHONE_NUMBER_ID}/messages`,
@@ -36,14 +60,7 @@ export async function sendWhatsAppMessage(to, message) {
                 }
             }
         );
-
-        console.log(
-            "META RESPONSE:",
-            JSON.stringify(response.data, null, 2)
-        );
-
         return response.data;
-
     } catch (error) {
         console.error("STATUS:", error.response?.status);
         console.error("DATA:", JSON.stringify(error.response?.data, null, 2));
@@ -59,6 +76,7 @@ export async function sendWhatsAppMessage(to, message) {
     }
 }
 
+
 export async function sendReservationConfirmation(data) {
     const message = `
 🏋️ Gym Booking System
@@ -68,10 +86,19 @@ Fecha: ${data.date}
 Horario: ${data.start_time} - ${data.end_time}
 ¡Te esperamos! 💪
 `;
-    return await sendWhatsAppMessage(
-        data.phone,
-        message.trim()
-    );
+    return sendWithFallback({
+        phone: data.phone,
+        message: message.trim(),
+        templateFunction: sendReservationTemplate,
+        templateData: {
+            phone: data.phone,
+            name: data.name,
+            discipline: data.discipline,
+            date: data.date,
+            schedule:
+                `${data.start_time} - ${data.end_time}`
+        }
+    });
 }
 
 
@@ -84,15 +111,63 @@ Fecha: ${data.date}
 Horario: ${data.start_time} - ${data.end_time}
 Esperamos verte pronto. 💪
 `;
-    return await sendWhatsAppMessage(
-        data.phone,
-        message.trim()
-    );
+    return sendWithFallback({
+        phone: data.phone,
+        message: message.trim(),
+        templateFunction: sendCancelTemplate,
+        templateData: {
+            phone: data.phone,
+            name: data.name,
+            discipline: data.discipline,
+            date: data.date,
+            schedule:
+                `${data.start_time} - ${data.end_time}`
+        }
+    });
 }
 
 
 
-// sendWelcomeMessage()
+
+
+
+
+
+
+// export async function sendReservationConfirmation(data) {
+//     const message = `
+// 🏋️ Gym Booking System
+// ✅ Reserva confirmada
+// Disciplina: ${data.discipline}
+// Fecha: ${data.date}
+// Horario: ${data.start_time} - ${data.end_time}
+// ¡Te esperamos! 💪
+// `;
+//     return await sendWhatsAppMessage(
+//         data.phone,
+//         message.trim()
+//     );
+// }
+
+
+// export async function sendReservationCancellation(data) {
+//     const message = `
+// 🏋️ Gym Booking System
+// ❌ Reserva cancelada
+// Disciplina: ${data.discipline}
+// Fecha: ${data.date}
+// Horario: ${data.start_time} - ${data.end_time}
+// Esperamos verte pronto. 💪
+// `;
+//     return await sendWhatsAppMessage(
+//         data.phone,
+//         message.trim()
+//     );
+// }
+
+
+
+
 
 
 

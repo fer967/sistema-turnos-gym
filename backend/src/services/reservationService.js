@@ -7,9 +7,11 @@ import {
     cancelReservation,
     getReservationDetails
 } from "../repositories/reservationRepository.js";
-import { sendReservationConfirmation, sendReservationCancellation }
-    from "./whatsappService.js";
 
+import {
+    notifyReservation,
+    notifyCancellation
+} from "./notificationService.js";
 
 export async function reserveSchedule(userId, data) {
     const schedule = await findScheduleById(data.schedule_id);
@@ -41,8 +43,9 @@ export async function reserveSchedule(userId, data) {
     );
     if (details?.phone) {
         try {
-            await sendReservationConfirmation({
+            await notifyReservation({
                 phone: details.phone,
+                name: details.name,
                 discipline: details.discipline,
                 date: new Date(details.reservation_date)
                     .toLocaleDateString("es-AR"),
@@ -87,8 +90,9 @@ export async function cancelMyReservation(reservationId, userId) {
     );
     if (details?.phone) {
         try {
-            await sendReservationCancellation({
+            await notifyCancellation({
                 phone: details.phone,
+                name: details.name,
                 discipline: details.discipline,
                 date: new Date(details.reservation_date)
                     .toLocaleDateString("es-AR"),

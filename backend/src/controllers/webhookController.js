@@ -15,12 +15,10 @@ export function verifyWebhook(req, res) {
 
 
 export function receiveWebhook(req, res) {
-
     console.log("====================================");
     console.log("WEBHOOK RECIBIDO");
     console.log(JSON.stringify(req.body, null, 2));
     console.log("====================================");
-
     res.sendStatus(200);
 }
 
