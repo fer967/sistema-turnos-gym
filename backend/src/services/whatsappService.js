@@ -60,7 +60,10 @@ export async function sendWhatsAppMessage(to, message) {
                 }
             }
         );
-        return response.data;
+
+        return response.data;   // devuelve objeto axios
+
+
     } catch (error) {
         console.error("STATUS:", error.response?.status);
         console.error("DATA:", JSON.stringify(error.response?.data, null, 2));
@@ -133,37 +136,6 @@ Esperamos verte pronto. 💪
 
 
 
-
-// export async function sendReservationConfirmation(data) {
-//     const message = `
-// 🏋️ Gym Booking System
-// ✅ Reserva confirmada
-// Disciplina: ${data.discipline}
-// Fecha: ${data.date}
-// Horario: ${data.start_time} - ${data.end_time}
-// ¡Te esperamos! 💪
-// `;
-//     return await sendWhatsAppMessage(
-//         data.phone,
-//         message.trim()
-//     );
-// }
-
-
-// export async function sendReservationCancellation(data) {
-//     const message = `
-// 🏋️ Gym Booking System
-// ❌ Reserva cancelada
-// Disciplina: ${data.discipline}
-// Fecha: ${data.date}
-// Horario: ${data.start_time} - ${data.end_time}
-// Esperamos verte pronto. 💪
-// `;
-//     return await sendWhatsAppMessage(
-//         data.phone,
-//         message.trim()
-//     );
-// }
 
 
 

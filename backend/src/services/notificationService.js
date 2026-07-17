@@ -13,7 +13,10 @@ import {
 
 
 function isConversationClosed(error) {
-    const apiError = error.response?.data?.error;
+
+    const apiError = error.response?.error;
+    // const apiError = error.response?.data?.error;
+
     return (
         apiError &&
         (
@@ -41,6 +44,22 @@ Horario: ${data.start_time} - ${data.end_time}
             message.trim()
         );
 
+        console.log(                                        // prueba  44 - 58
+            "RESPUESTA WHATSAPP:",
+            JSON.stringify(response, null, 2)               // .data
+        );
+        console.log(
+            "MESSAGE ID:",
+            response.messages?.[0]?.id                   // .data
+        );
+        console.log(
+            "LOG A GUARDAR:",
+            {
+                whatsapp_message_id:
+                    response.messages?.[0]?.id                // .data
+            }
+        );                                                    ////////////
+
         await createMessageLog({
             reservation_id: data.reservation_id,
             phone: data.phone,
@@ -49,7 +68,7 @@ Horario: ${data.start_time} - ${data.end_time}
             status: "sent",
             template_name: "reservation_confirmation",
             payload: data,
-            whatsapp_message_id: response.data?.messages?.[0]?.id
+            whatsapp_message_id: response.messages?.[0]?.id      // .data  y los demas que estan mas abajo
         });
 
         return response;
@@ -77,7 +96,7 @@ Horario: ${data.start_time} - ${data.end_time}
                     template_name: "reservation_confirmation",
                     payload: data,
                     whatsapp_message_id:
-                        response.data?.messages?.[0]?.id
+                        response.messages?.[0]?.id
                 });
 
                 return response;
@@ -146,7 +165,7 @@ Horario: ${data.start_time} - ${data.end_time}
             status: "sent",
             template_name: "reservation_cancelled",
             payload: data,
-            whatsapp_message_id: response.data?.messages?.[0]?.id
+            whatsapp_message_id: response.messages?.[0]?.id
         });
 
         return response;
@@ -174,7 +193,7 @@ Horario: ${data.start_time} - ${data.end_time}
                     template_name: "reservation_cancelled",
                     payload: data,
                     whatsapp_message_id:
-                        response.data?.messages?.[0]?.id
+                        response.messages?.[0]?.id
                 });
 
                 return response;

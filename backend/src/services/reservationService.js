@@ -43,7 +43,10 @@ export async function reserveSchedule(userId, data) {
     );
     if (details?.phone) {
         try {
-            await notifyReservation({
+
+            await notifyReservation({                
+                reservation_id: reservation.id,    // modificar -> agregar campos
+                user_id: userId,                   // idem
                 phone: details.phone,
                 name: details.name,
                 discipline: details.discipline,
@@ -52,6 +55,7 @@ export async function reserveSchedule(userId, data) {
                 start_time: details.start_time.slice(0, 5),
                 end_time: details.end_time.slice(0, 5)
             });
+
             console.log(
                 `✅ WhatsApp enviado a ${details.phone}`
             );

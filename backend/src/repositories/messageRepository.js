@@ -39,6 +39,15 @@ export async function createMessageLog(data) {
         data.error_message
     ];
 
+    console.log(                                         //  prueba 42 - 49
+        "createMessageLog DATA:",
+        data
+    );
+    console.log(
+        "VALUES:",
+        values
+    );
+
     const result = await db.query(query, values);
     return result.rows[0];
 }
@@ -60,7 +69,7 @@ export async function updateMessageStatus(
         WHERE whatsapp_message_id = $1;
     `;
 
-    await db.query(query, [                       
+    await db.query(query, [
         whatsappMessageId,
         status,
         errorCode,

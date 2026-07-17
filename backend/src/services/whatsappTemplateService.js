@@ -45,7 +45,9 @@ async function sendTemplate(
         );
         console.log("META TEMPLATE RESPONSE:");
         console.log(response.data);
-        return response.data;
+
+        return response.data;                             //
+
     } catch (error) {
         console.error("STATUS:", error.response?.status);
         console.error(
@@ -86,47 +88,6 @@ export async function sendCancelTemplate(data) {
 
 
 
-// async function sendTemplate(
-//     templateName,
-//     phone,
-//     parameters
-// ) {
-
-//     console.log("================================");
-//     console.log("ENVIANDO PLANTILLA");
-//     console.log("Template:", templateName);
-//     console.log("Phone:", phone);
-
-//     const response = await axios.post(
-//         `${BASE_URL}/${PHONE_ID}/messages`,
-//         {
-//             messaging_product: "whatsapp",
-//             to: phone,
-//             type: "template",
-//             template: {
-//                 name: templateName,
-//                 language: {
-//                     code: "es_AR"
-//                 },
-//                 components: [
-//                     {
-//                         type: "body",
-//                         parameters
-//                     }
-//                 ]
-//             }
-//         },
-//         {
-//             headers: {
-//                 Authorization: `Bearer ${TOKEN}`,
-//                 "Content-Type": "application/json"
-//             }
-//         }
-//     );
-//     console.log("META TEMPLATE RESPONSE:");
-//     console.log(response.data);
-//     return response.data;
-// }
 
 
 
