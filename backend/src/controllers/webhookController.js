@@ -29,7 +29,7 @@ export async function receiveWebhook(req, res) {
                 ?.changes?.[0]
                 ?.value?.statuses || [];
         for (const status of statuses) {
-            await updateMessageStatus(
+            await updateMessageStatus(        
                 status.id,
                 status.status,
                 status.errors?.[0]?.code,

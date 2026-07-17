@@ -60,7 +60,7 @@ export async function updateMessageStatus(
         WHERE whatsapp_message_id = $1;
     `;
 
-    await db.query(query, [
+    await db.query(query, [                       
         whatsappMessageId,
         status,
         errorCode,

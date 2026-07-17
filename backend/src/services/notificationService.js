@@ -49,7 +49,7 @@ Horario: ${data.start_time} - ${data.end_time}
             status: "sent",
             template_name: "reservation_confirmation",
             payload: data,
-            provider_message_id: response.data?.messages?.[0]?.id
+            whatsapp_message_id: response.data?.messages?.[0]?.id
         });
 
         return response;
@@ -74,9 +74,9 @@ Horario: ${data.start_time} - ${data.end_time}
                     type: "confirmation",
                     channel: "template",
                     status: "template_sent",
-                    template_name: "reservation_cancelled",
+                    template_name: "reservation_confirmation",
                     payload: data,
-                    provider_message_id:
+                    whatsapp_message_id:
                         response.data?.messages?.[0]?.id
                 });
 
@@ -90,7 +90,7 @@ Horario: ${data.start_time} - ${data.end_time}
                     type: "confirmation",
                     channel: "template",
                     status: "failed",
-                    template_name: "reservation_cancelled",
+                    template_name: "reservation_confirmation",
                     payload: data,
                     error_code:
                         templateError.response?.data?.error?.code,
@@ -124,7 +124,7 @@ Horario: ${data.start_time} - ${data.end_time}
 export async function notifyCancellation(data) {
     const message = `
 🏋️ Gym Booking System
-✅ Reserva cancelada
+❌ Reserva cancelada
 Hola ${data.name}.
 Disciplina: ${data.discipline}
 Fecha: ${data.date}
@@ -146,7 +146,7 @@ Horario: ${data.start_time} - ${data.end_time}
             status: "sent",
             template_name: "reservation_cancelled",
             payload: data,
-            provider_message_id: response.data?.messages?.[0]?.id
+            whatsapp_message_id: response.data?.messages?.[0]?.id
         });
 
         return response;
@@ -157,7 +157,7 @@ Horario: ${data.start_time} - ${data.end_time}
 
             try {
 
-                const response = await sendReservationTemplate({
+                const response = await sendCancelTemplate({
                     phone: data.phone,
                     name: data.name,
                     discipline: data.discipline,
@@ -173,7 +173,7 @@ Horario: ${data.start_time} - ${data.end_time}
                     status: "template_sent",
                     template_name: "reservation_cancelled",
                     payload: data,
-                    provider_message_id:
+                    whatsapp_message_id:
                         response.data?.messages?.[0]?.id
                 });
 
