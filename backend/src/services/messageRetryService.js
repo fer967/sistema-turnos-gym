@@ -24,7 +24,7 @@ export async function retryFailedMessage(status) {
         return;
     }
 
-    console.log("📄 Log encontrado:");               //  agrego
+    console.log("📄 Log encontrado:");
     console.log(log);
 
     if (log.retried) {
@@ -34,23 +34,37 @@ export async function retryFailedMessage(status) {
         return;
     }
 
-    let response;  // respuesta de plantilla
+    let response;
     if (
         log.template_name ===
         "reservation_confirmation"
     ) {
-        response =
-            await sendReservationTemplate(log.payload);      /////////
+
+        response = await sendReservationTemplate({
+            phone: log.payload.phone,
+            name: log.payload.name,
+            discipline: log.payload.discipline,
+            date: log.payload.date,
+            schedule: `${log.payload.start_time} - ${log.payload.end_time}`
+        });
+
     }
     else if (
         log.template_name ===
         "reservation_cancelled"
     ) {
-        response =
-            await sendCancelTemplate(log.payload);
+
+        response = await sendCancelTemplate({
+            phone: log.payload.phone,
+            name: log.payload.name,
+            discipline: log.payload.discipline,
+            date: log.payload.date,
+            schedule: `${log.payload.start_time} - ${log.payload.end_time}`
+        });
+
     }
 
-    console.log("📨 Respuesta plantilla:");              //  agre
+    console.log("📨 Respuesta plantilla:");
     console.log(response);
     console.log(
         "Nuevo WAMID:",
@@ -67,7 +81,7 @@ export async function retryFailedMessage(status) {
         template_name: log.template_name,
         payload: log.payload,
         whatsapp_message_id:
-            response.messages[0].id,         //  .data (elimine)
+            response.messages[0].id,
         retried: true,
         parent_message_id: log.id
     });
