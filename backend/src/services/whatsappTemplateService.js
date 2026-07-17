@@ -1,9 +1,8 @@
 import axios from "axios";
 
-const BASE_URL = process.env.WHATSAPP_BASE_URL;
+const BASE_URL = `https://graph.facebook.com/${process.env.WHATSAPP_API_VERSION}`;
 const PHONE_ID = process.env.WHATSAPP_PHONE_NUMBER_ID;
 const TOKEN = process.env.WHATSAPP_TOKEN;
-
 
 async function sendTemplate(
     templateName,

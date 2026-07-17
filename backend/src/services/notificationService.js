@@ -13,10 +13,8 @@ import {
 
 
 function isConversationClosed(error) {
-
     const apiError = error.response?.error;
     // const apiError = error.response?.data?.error;
-
     return (
         apiError &&
         (
@@ -61,6 +59,7 @@ Horario: ${data.start_time} - ${data.end_time}
         );                                                    ////////////
 
         await createMessageLog({
+            user_id: data.user_id,
             reservation_id: data.reservation_id,
             phone: data.phone,
             type: "confirmation",
@@ -88,6 +87,7 @@ Horario: ${data.start_time} - ${data.end_time}
                 });
 
                 await createMessageLog({
+                    user_id: data.user_id,
                     reservation_id: data.reservation_id,
                     phone: data.phone,
                     type: "confirmation",
@@ -104,6 +104,7 @@ Horario: ${data.start_time} - ${data.end_time}
             } catch (templateError) {
 
                 await createMessageLog({
+                    user_id: data.user_id,
                     reservation_id: data.reservation_id,
                     phone: data.phone,
                     type: "confirmation",
@@ -122,6 +123,7 @@ Horario: ${data.start_time} - ${data.end_time}
         }
 
         await createMessageLog({
+            user_id: data.user_id,
             reservation_id: data.reservation_id,
             phone: data.phone,
             type: "confirmation",
@@ -158,6 +160,7 @@ Horario: ${data.start_time} - ${data.end_time}
         );
 
         await createMessageLog({
+            user_id: data.user_id,
             reservation_id: data.reservation_id,
             phone: data.phone,
             type: "cancellation",
@@ -185,6 +188,7 @@ Horario: ${data.start_time} - ${data.end_time}
                 });
 
                 await createMessageLog({
+                    user_id: data.user_id,
                     reservation_id: data.reservation_id,
                     phone: data.phone,
                     type: "cancellation",
@@ -201,6 +205,7 @@ Horario: ${data.start_time} - ${data.end_time}
             } catch (templateError) {
 
                 await createMessageLog({
+                    user_id: data.user_id,
                     reservation_id: data.reservation_id,
                     phone: data.phone,
                     type: "cancellation",
@@ -217,6 +222,7 @@ Horario: ${data.start_time} - ${data.end_time}
         }
 
         await createMessageLog({
+            user_id: data.user_id,
             reservation_id: data.reservation_id,
             phone: data.phone,
             type: "cancellation",
