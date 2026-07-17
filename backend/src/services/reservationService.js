@@ -45,8 +45,8 @@ export async function reserveSchedule(userId, data) {
         try {
 
             await notifyReservation({                
-                reservation_id: reservation.id,    // modificar -> agregar campos
-                user_id: userId,                   // idem
+                reservation_id: reservation.id,   
+                user_id: userId,                   
                 phone: details.phone,
                 name: details.name,
                 discipline: details.discipline,
@@ -95,6 +95,8 @@ export async function cancelMyReservation(reservationId, userId) {
     if (details?.phone) {
         try {
             await notifyCancellation({
+                reservation_id: reservation.id,   
+                user_id: userId, 
                 phone: details.phone,
                 name: details.name,
                 discipline: details.discipline,

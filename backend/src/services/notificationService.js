@@ -141,7 +141,6 @@ Horario: ${data.start_time} - ${data.end_time}
 }
 
 
-
 export async function notifyCancellation(data) {
     const message = `
 🏋️ Gym Booking System

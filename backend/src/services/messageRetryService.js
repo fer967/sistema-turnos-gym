@@ -50,7 +50,7 @@ export async function retryFailedMessage(status) {
             await sendCancelTemplate(log.payload);
     }
 
-    console.log("📨 Respuesta plantilla:");              //  agrego
+    console.log("📨 Respuesta plantilla:");              //  agre
     console.log(response);
     console.log(
         "Nuevo WAMID:",
