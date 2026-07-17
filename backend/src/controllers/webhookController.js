@@ -1,5 +1,5 @@
-import { updateMessageStatus } from "../repositories/messageRepository";
-import { retryFailedMessage } from "../services/messageRetryService";
+import { updateMessageStatus } from "../repositories/messageRepository.js";
+import { retryFailedMessage } from "../services/messageRetryService.js";
 
 
 export function verifyWebhook(req, res) {
